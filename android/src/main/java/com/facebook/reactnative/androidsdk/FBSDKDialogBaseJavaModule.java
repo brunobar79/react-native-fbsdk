@@ -20,13 +20,15 @@
 
 package com.facebook.reactnative.androidsdk;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import com.facebook.CallbackManager;
+import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
-public abstract class FBSDKDialogBaseJavaModule extends ReactContextBaseJavaModule {
+public abstract class FBSDKDialogBaseJavaModule extends ReactContextBaseJavaModule implements ActivityEventListener {
 
     private CallbackManager mCallbackManager;
 
@@ -37,5 +39,14 @@ public abstract class FBSDKDialogBaseJavaModule extends ReactContextBaseJavaModu
     protected FBSDKDialogBaseJavaModule(ReactApplicationContext reactContext, CallbackManager callbackManager) {
         super(reactContext);
         mCallbackManager = callbackManager;
+        reactContext.addActivityEventListener(this);
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {}
+
+    @Override
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
