@@ -29,8 +29,8 @@ import com.facebook.login.DefaultAudience;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -48,7 +48,7 @@ import java.util.Set;
 /**
  * This is a {@link NativeModule} that allows JS to use LoginManager of Facebook Android SDK.
  */
-public class FBLoginManagerModule extends ReactContextBaseJavaModule {
+public class FBLoginManagerModule extends ReactContextBaseJavaModule  implements ActivityEventListener {
 
     private class LoginManagerCallback extends ReactNativeFacebookSDKCallback<LoginResult> {
 
@@ -78,7 +78,17 @@ public class FBLoginManagerModule extends ReactContextBaseJavaModule {
     public FBLoginManagerModule(ReactApplicationContext reactContext, CallbackManager callbackManager) {
         super(reactContext);
         mCallbackManager = callbackManager;
+        reactContext.addActivityEventListener(this);
     }
+
+    @Override
+    public void onNewIntent(Intent intent) {}
+
+    @Override
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     @Override
     public String getName() {
@@ -185,4 +195,8 @@ public class FBLoginManagerModule extends ReactContextBaseJavaModule {
         }
         return Collections.unmodifiableSet(set);
     }
+
+
+
+
 }
