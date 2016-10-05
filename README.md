@@ -114,8 +114,9 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     }
 };
 ```
+**NOTE: The following change is not required if you're running react-native 0.31+**
 
-In `MainActivity.java`
+In `MainActivity.java` 
 
 Override `onActivityResult()` method
 ```java
