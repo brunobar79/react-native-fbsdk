@@ -114,7 +114,7 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     }
 };
 ```
-**NOTE: The following change is not required if you're running react-native 0.31+**
+**NOTE: The following change is ONLY required if you're running react-native between v0.29 to v0.32 (inclusive)**
 
 In `MainActivity.java` 
 
